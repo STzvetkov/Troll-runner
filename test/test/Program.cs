@@ -13,6 +13,8 @@ namespace test
         {
             Random generator = new Random();
             List<AerialObstacle> clouds = new List<AerialObstacle>();
+            Path trollPath = new Path();
+            SetFieldSize();
 
             while (true)
             {
@@ -31,13 +33,22 @@ namespace test
 
                 Console.Clear();
 
+                trollPath.DrawPath();
                 foreach (var cloud in clouds)
                 {
                     cloud.DrawCloud();
                 }
 
-                Thread.Sleep(100);
+                Thread.Sleep(200);
             }
+        }
+
+        static void SetFieldSize()
+        {
+            Console.WindowHeight = 20;
+            Console.WindowWidth = 120;
+            Console.BufferWidth = 120;
+            Console.BufferHeight = 20;
         }
     }
 }
