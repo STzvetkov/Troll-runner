@@ -1,13 +1,13 @@
 # Team Troll
 Teamwork:
-- Бисер Сираков
-- Никола Богомиров
-- Симеон Цветков
-- Красимира Петрова
-- Златимир Михайлов
-- Кристиан Иванов
-- Благой Шоков
-- Петко Хаджипенков
+- Biser Sirakov
+- Nikola Bogomirov
+- Simeon Tzvetkov
+- Krasimira Petrova
+- Zlatimir Mihailov
+- Kristian Ivanov
+- Blagoy Shokov
+- Petko Hadjipenkov
 
 ##Project Discription
 Troll runner
