@@ -14,9 +14,9 @@ namespace test
             this.X = x;
             this.Y = y;
         }
-        public int X { get; set; }
+        public int X { get; private set; }
 
-        public int Y { get; set; }
+        public int Y { get; private set; }
 
         protected virtual void PrintOnPosition(int cloudRows, int cloudCols)
         {
