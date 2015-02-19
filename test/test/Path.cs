@@ -8,7 +8,6 @@ namespace test
 {
     public class Path
     {
-        public Random generator = new Random();
         public Path()
         {
         }

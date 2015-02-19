@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AerialObstacle.cs" />
+    <Compile Include="LandObstacle.cs" />
     <Compile Include="Obstacle.cs" />
+    <Compile Include="Path.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

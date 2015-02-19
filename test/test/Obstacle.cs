@@ -51,7 +51,7 @@ namespace test
             }
         }
 
-        public virtual void DrawCloud()
+        public virtual void DrawObstacle()
         {
             int rows = this.form.GetLength(0);
             int cols = this.form.GetLength(1);
@@ -93,7 +93,7 @@ namespace test
             }
         }
 
-        public void MoveCloud()
+        public void MoveObstacle()
         {
             if (this.X > 0)
             {

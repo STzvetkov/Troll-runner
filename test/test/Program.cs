@@ -9,37 +9,67 @@ namespace test
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Random generator = new Random();
             List<AerialObstacle> clouds = new List<AerialObstacle>();
+            List<LandObstacle> traps = new List<LandObstacle>();
             Path trollPath = new Path();
             SetFieldSize();
+            int distanceBetweenObstacles = 0;
+
 
             while (true)
             {
                 int chance = generator.Next(1, 101);
 
-                if (chance < 50)
+                if (chance < 30)
                 {
-                    int secondChance = generator.Next(0,4);
+                    int secondChance = generator.Next(0, 4);
                     clouds.Add(new AerialObstacle(Console.WindowWidth - 1, secondChance));
+                }
+
+                if (chance < 30 && distanceBetweenObstacles > 10)
+                {
+                    traps.Add(new LandObstacle(Console.WindowWidth - 1, Console.WindowHeight - 3));
+                    distanceBetweenObstacles = 0;
                 }
 
                 foreach (var cloud in clouds)
                 {
-                    cloud.MoveCloud();
+                    cloud.MoveObstacle();
+                }
+
+                foreach (var trap in traps)
+                {
+                    trap.MoveObstacle();
                 }
 
                 Console.Clear();
 
                 trollPath.DrawPath();
-                foreach (var cloud in clouds)
+                for (int i = 0; i < clouds.Count; i++)
                 {
-                    cloud.DrawCloud();
+                    clouds[i].DrawObstacle();
+
+                    if (clouds[i].X == 0)
+                    {
+                        clouds.RemoveAt(i);
+                    }
                 }
 
-                Thread.Sleep(200);
+                for (int i = 0; i < traps.Count; i++)
+                {
+                    traps[i].DrawObstacle();
+
+                    if (traps[i].X == 0)
+                    {
+                        traps.RemoveAt(i);
+                    }
+                }
+
+                distanceBetweenObstacles++;
+                Thread.Sleep(50);
             }
         }
 
