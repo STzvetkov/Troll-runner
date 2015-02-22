@@ -1,22 +1,82 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Threading;
 
-namespace Game
+namespace TrollRunner
 {
-    static class Program
+    class Program
     {
-        /// <summary>
-        /// The main entry point for the application.      
-        /// </summary>
-        /// 
-        [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            Random generator = new Random();
+            List<AerialObstacle> clouds = new List<AerialObstacle>();
+            List<LandObstacle> traps = new List<LandObstacle>();
+            Path trollPath = new Path();
+            SetFieldSize();
+            int distanceBetweenObstacles = 0;
+
+
+            while (true)
+            {
+                int chance = generator.Next(1, 101);
+
+                if (chance < 30)
+                {
+                    int secondChance = generator.Next(0, 4);
+                    clouds.Add(new AerialObstacle(Console.WindowWidth - 1, secondChance));
+                }
+
+                if (chance < 30 && distanceBetweenObstacles > 10)
+                {
+                    traps.Add(new LandObstacle(Console.WindowWidth - 1, Console.WindowHeight - 3));
+                    distanceBetweenObstacles = 0;
+                }
+
+                foreach (var cloud in clouds)
+                {
+                    cloud.MoveObstacle();
+                }
+
+                foreach (var trap in traps)
+                {
+                    trap.MoveObstacle();
+                }
+
+                Console.Clear();
+
+                trollPath.DrawPath();
+                for (int i = 0; i < clouds.Count; i++)
+                {
+                    clouds[i].DrawObstacle();
+
+                    if (clouds[i].X == 0)
+                    {
+                        clouds.RemoveAt(i);
+                    }
+                }
+
+                for (int i = 0; i < traps.Count; i++)
+                {
+                    traps[i].DrawObstacle();
+
+                    if (traps[i].X == 0)
+                    {
+                        traps.RemoveAt(i);
+                    }
+                }
+
+                distanceBetweenObstacles++;
+                Thread.Sleep(50);
+            }
+        }
+
+        static void SetFieldSize()
+        {
+            Console.WindowHeight = 20;
+            Console.WindowWidth = 120;
+            Console.BufferWidth = 120;
+            Console.BufferHeight = 20;
         }
     }
 }
