@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 
+
 namespace test
 {
     class Program
@@ -26,9 +27,10 @@ namespace test
             string fileName = System.IO.Path.GetFullPath(Directory.GetCurrentDirectory() + @"\HighScores.txt");        
             string[] scores = System.IO.File.ReadAllLines(fileName);
             string highscore = scores[0];
+            bool playing = true;
 
             
-            while (true)
+            while (playing)
             {
                
                 int chance = generator.Next(1, 101);
@@ -56,9 +58,10 @@ namespace test
                 }
                
                 Console.Clear();
-                
+               
                 Score(startResult,highscore);
                 trollPath.DrawPath();
+                
                 for (int i = 0; i < cloudsContainer.Count; i++)
                 {
                     cloudsContainer[i].DrawObstacle();
@@ -79,11 +82,10 @@ namespace test
                         trapsContainer.RemoveAt(i);
                     }
                 }
-                
+                PauseResume(playing);
                 distanceBetweenObstacles++;
                 startResult+=10;
-                Thread.Sleep(50);
-               
+                Thread.Sleep(50);             
             }
             
         }
@@ -96,7 +98,30 @@ namespace test
             Console.Write("High Score: {0}", high);
        
         }
-
+        static void PauseResume(bool play)
+        {
+            if (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo press = Console.ReadKey(true);
+                if (press.Key == ConsoleKey.Escape)
+                {
+                    play = false;
+                    Console.SetCursorPosition(51, 7);
+                    Console.Write("Game is now paused");
+                    Console.SetCursorPosition(50, 8);
+                    Console.Write("Press ESC to continue");
+                    ConsoleKeyInfo pressAgain = Console.ReadKey(true);
+                    while (pressAgain.Key != ConsoleKey.Escape)
+                    {
+                        pressAgain = Console.ReadKey(true);
+                    }
+                    if (pressAgain.Key == ConsoleKey.M)
+                    {
+                        play = true;
+                    }
+                }
+            }
+        }
         static void SetFieldSize()
         {
             Console.WindowHeight = 22;
