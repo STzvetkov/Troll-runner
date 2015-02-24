@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace test
 {
     class Program
+
     {
+       
         static void Main()
         {
             Random generator = new Random();
@@ -19,10 +22,15 @@ namespace test
             SetFieldSize();
             int distanceBetweenObstacles = 0;
             int gameSpeed = 1;
+            int startResult = 0;
+            string fileName = System.IO.Path.GetFullPath(Directory.GetCurrentDirectory() + @"\HighScores.txt");        
+            string[] scores = System.IO.File.ReadAllLines(fileName);
+            string highscore = scores[0];
 
-
+            
             while (true)
             {
+               
                 int chance = generator.Next(1, 101);
 
                 if (chance < 30)
@@ -46,9 +54,10 @@ namespace test
                 {
                     trap.MoveObstacle(gameSpeed);
                 }
-
+               
                 Console.Clear();
-
+                
+                Score(startResult,highscore);
                 trollPath.DrawPath();
                 for (int i = 0; i < cloudsContainer.Count; i++)
                 {
@@ -62,6 +71,7 @@ namespace test
 
                 for (int i = 0; i < trapsContainer.Count; i++)
                 {
+                    
                     trapsContainer[i].DrawObstacle();
 
                     if (trapsContainer[i].X == 0)
@@ -69,18 +79,30 @@ namespace test
                         trapsContainer.RemoveAt(i);
                     }
                 }
-
+                
                 distanceBetweenObstacles++;
+                startResult+=10;
                 Thread.Sleep(50);
+               
             }
+            
+        }
+        static void Score(int result,string high)
+        {
+            Console.SetCursorPosition(0, Console.BufferHeight - 1);
+            Console.Write("Current Score: {0}", result);
+           
+            Console.SetCursorPosition((108-high.Length-1), Console.BufferHeight - 1);
+            Console.Write("High Score: {0}", high);
+       
         }
 
         static void SetFieldSize()
         {
-            Console.WindowHeight = 20;
+            Console.WindowHeight = 22;
             Console.WindowWidth = 120;
             Console.BufferWidth = 120;
-            Console.BufferHeight = 20;
+            Console.BufferHeight = 22;
         }
     }
 }
