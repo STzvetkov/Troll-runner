@@ -12,8 +12,9 @@ namespace test
         static void Main()
         {
             Random generator = new Random();
-            List<AerialObstacle> clouds = new List<AerialObstacle>();
-            List<LandObstacle> traps = new List<LandObstacle>();
+            List<AerialObstacle> cloudsContainer = new List<AerialObstacle>();
+            List<LandObstacle> trapsContainer = new List<LandObstacle>();
+            List<Pickup> pickupContainer = new List<Pickup>();
             Path trollPath = new Path();
             SetFieldSize();
             int distanceBetweenObstacles = 0;
@@ -27,21 +28,21 @@ namespace test
                 if (chance < 30)
                 {
                     int secondChance = generator.Next(0, 4);
-                    clouds.Add(new AerialObstacle(Console.WindowWidth - 1, secondChance));
+                    cloudsContainer.Add(new AerialObstacle(Console.WindowWidth - 1, secondChance));
                 }
 
                 if (chance < 30 && distanceBetweenObstacles > 10)
                 {
-                    traps.Add(new LandObstacle(Console.WindowWidth - 1, Console.WindowHeight - 3));
+                    trapsContainer.Add(new LandObstacle(Console.WindowWidth - 1, Console.WindowHeight - 3));
                     distanceBetweenObstacles = 0;
                 }
 
-                foreach (var cloud in clouds)
+                foreach (var cloud in cloudsContainer)
                 {
                     cloud.MoveObstacle(gameSpeed);
                 }
 
-                foreach (var trap in traps)
+                foreach (var trap in trapsContainer)
                 {
                     trap.MoveObstacle(gameSpeed);
                 }
@@ -49,23 +50,23 @@ namespace test
                 Console.Clear();
 
                 trollPath.DrawPath();
-                for (int i = 0; i < clouds.Count; i++)
+                for (int i = 0; i < cloudsContainer.Count; i++)
                 {
-                    clouds[i].DrawObstacle();
+                    cloudsContainer[i].DrawObstacle();
 
-                    if (clouds[i].X == 0)
+                    if (cloudsContainer[i].X == 0)
                     {
-                        clouds.RemoveAt(i);
+                        cloudsContainer.RemoveAt(i);
                     }
                 }
 
-                for (int i = 0; i < traps.Count; i++)
+                for (int i = 0; i < trapsContainer.Count; i++)
                 {
-                    traps[i].DrawObstacle();
+                    trapsContainer[i].DrawObstacle();
 
-                    if (traps[i].X == 0)
+                    if (trapsContainer[i].X == 0)
                     {
-                        traps.RemoveAt(i);
+                        trapsContainer.RemoveAt(i);
                     }
                 }
 
