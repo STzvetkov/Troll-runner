@@ -90,11 +90,11 @@ namespace TrollRunner
             }
         }
 
-        public void MoveObstacle()
+        public void MoveObstacle(int gameSpeed)
         {
             if (this.X > 0)
             {
-                this.X--;
+                this.X -= gameSpeed;
             }
         }
     }

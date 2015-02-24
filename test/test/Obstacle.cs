@@ -9,11 +9,13 @@ namespace test
     public abstract class Obstacle
     {
         protected char[,] form;
+
         public Obstacle(int x, int y)
         {
             this.X = x;
             this.Y = y;
         }
+
         public int X { get; private set; }
 
         public int Y { get; private set; }
@@ -93,11 +95,11 @@ namespace test
             }
         }
 
-        public void MoveObstacle()
+        public void MoveObstacle(int speed)
         {
             if (this.X > 0)
             {
-                this.X--;
+                this.X -= speed;
             }
         }
     }

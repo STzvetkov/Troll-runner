@@ -17,6 +17,7 @@ namespace test
             Path trollPath = new Path();
             SetFieldSize();
             int distanceBetweenObstacles = 0;
+            int gameSpeed = 1;
 
 
             while (true)
@@ -37,12 +38,12 @@ namespace test
 
                 foreach (var cloud in clouds)
                 {
-                    cloud.MoveObstacle();
+                    cloud.MoveObstacle(gameSpeed);
                 }
 
                 foreach (var trap in traps)
                 {
-                    trap.MoveObstacle();
+                    trap.MoveObstacle(gameSpeed);
                 }
 
                 Console.Clear();
