@@ -35,12 +35,12 @@ namespace TrollRunner
 
                 foreach (var cloud in clouds)
                 {
-                    cloud.MoveObstacle();
+                    //cloud.MoveObstacle();
                 }
 
                 foreach (var trap in traps)
                 {
-                    trap.MoveObstacle();
+                    //trap.MoveObstacle();
                 }
 
                 Console.Clear();

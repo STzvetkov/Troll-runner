@@ -15,6 +15,8 @@ namespace test
        
         static void Main()
         {
+            Console.Title = ("Troll runner");
+
             Random generator = new Random();
             List<AerialObstacle> cloudsContainer = new List<AerialObstacle>();
             List<LandObstacle> trapsContainer = new List<LandObstacle>();
@@ -93,7 +95,10 @@ namespace test
         {
             Console.SetCursorPosition(0, Console.BufferHeight - 1);
             Console.Write("Current Score: {0}", result);
-           
+
+            Console.SetCursorPosition((64 - high.Length - 1), Console.BufferHeight - 1);
+            Console.Write("Press ESC to pause");
+
             Console.SetCursorPosition((108-high.Length-1), Console.BufferHeight - 1);
             Console.Write("High Score: {0}", high);
        
