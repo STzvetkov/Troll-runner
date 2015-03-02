@@ -48,31 +48,9 @@ namespace test
         {
             int rows = this.form.GetLength(0);
             int cols = this.form.GetLength(1);
-            if (this.X == Console.WindowWidth - 4)
-            {
-                PrintOnPosition(rows, cols - 1);
-            }
-            else if (this.X == Console.WindowWidth - 3)
-            {
-                PrintOnPosition(rows, cols - 2);
-            }
-            else if (this.X == Console.WindowWidth - 2)
-            {
-                PrintOnPosition(rows, cols - 3);
-            }
-            else if (this.X == Console.WindowWidth - 1)
-            {
-                PrintOnPosition(rows, cols - 4);
-            }
-            else if (this.X == 0)
-            {
-                PrintOnPosition(rows, 1);
-            }
-            else
-            {
-                PrintOnPosition(rows, cols);
-            }
+            PrintOnPosition(rows, cols);
         }
+        
     }
 }
 

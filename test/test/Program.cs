@@ -39,7 +39,7 @@ namespace test
             int distanceBetweenPickups = 0;
                        
             int startResult = 0;
-            string fileName = System.IO.Path.GetFullPath(Directory.GetCurrentDirectory() + @"..\..\..\data\HighScores.txt");        
+            string fileName = @"../../data/HighScores.txt";        
             string[] scores = System.IO.File.ReadAllLines(fileName);
             string highscore = scores[0];
             bool playing = true;
