@@ -17,6 +17,7 @@ namespace test
         private bool hasJumped = false;
         private bool doubleJump = false;
         private int jumpHeight = 0;
+        private int jumpStage;
 
         public Runner(int x, int y)
             : base(x, y)
@@ -72,7 +73,7 @@ namespace test
         {
             if (this.hasJumped)
             {
-                if (this.jumpHeight < MaxJumpHeight && !doubleJump)
+                if (this.jumpHeight < MaxJumpHeight)
                 {
                     this.MoveUp();
                 }
@@ -98,11 +99,15 @@ namespace test
         {
             if (this.hasJumped)
             {
-                this.doubleJump = true;
+                if (jumpStage < 10)
+                {
+                    this.doubleJump = true;   
+                }
             }
             else
             {
                 this.hasJumped = true;
+                this.jumpStage = 0;
             }
         }
 
