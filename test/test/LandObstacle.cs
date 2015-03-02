@@ -21,20 +21,7 @@ namespace test
 
         private void FillLandObstacle()
         {
-            for (int row = 0; row < NumberOfRows; row++)
-            {
-                for (int col = 0; col < NumberOfCols; col++)
-                {
-                    if (row == 0)
-                    {
-                        form[row, col] = '|';
-                    }
-                    else
-                    {
-                        form[row, col] = '^';
-                    }
-                }   
-            }
+            this.form = GraphicsManagement.GetGraphic("obstacle1");
         }
 
         protected override void PrintOnPosition(int trapRows, int trapCols)

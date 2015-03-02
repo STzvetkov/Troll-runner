@@ -20,16 +20,7 @@ namespace test
 
         private void FillAerialObstacle()
         {
-            this.form[0, 0] = ' ';
-            this.form[0, 1] = '.';
-            this.form[0, 2] = '\'';
-            this.form[0, 3] = ')';
-            this.form[0, 4] = ' ';
-            this.form[1, 0] = '(';
-            this.form[1, 1] = '_';
-            this.form[1, 2] = ' ';
-            this.form[1, 3] = ' ';
-            this.form[1, 4] = ')';
+            this.form = GraphicsManagement.GetGraphic("cloud1");
         }
     }
 }
