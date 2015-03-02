@@ -89,14 +89,15 @@ namespace test
                 startResult+=10;
                 Thread.Sleep(50);             
             }
-            
+
+            //Console.CursorVisible = false;
         }
         static void Score(int result,string high)
         {
             Console.SetCursorPosition(0, Console.BufferHeight - 1);
             Console.Write("Current Score: {0}", result);
 
-            Console.SetCursorPosition((64 - high.Length - 1), Console.BufferHeight - 1);
+            Console.SetCursorPosition((62 - high.Length - 1), Console.BufferHeight - 1);
             Console.Write("Press ESC to pause");
 
             Console.SetCursorPosition((108-high.Length-1), Console.BufferHeight - 1);
