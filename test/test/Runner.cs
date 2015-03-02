@@ -8,31 +8,33 @@ namespace test
 {
     public class Runner : Obstacle
     {
-        public const int NumberOfRows = 2;
+        public const int NumberOfRows = 3;
 
-        public const int NumberOfCols = 2;
-        public char C { get; set; }
+        public const int NumberOfCols = 3;
 
-        public Runner(int x, int y, char c)
+        public Runner(int x, int y)
             : base(x, y)
         {
             this.form = new char[NumberOfRows, NumberOfCols];
-            this.C = 'O';
-
         }
 
 
-        private void FillLandObstacle()
+        private void FillTroll()
         {
+            this.form = GraphicsManagement.GetGraphic("Troll");
 
         }
 
-        private void PrintTrollOnPosition(int x, int y, char c)
+        private void PrintTrollOnPosition(int x, int y)
         {
+            Console.Write(this.form[3, 3]);
+        }
 
-            Console.SetCursorPosition(this.X, this.Y);
-            Console.Write(c);
-
+        public void DrawTroll()
+        {
+            int rows = this.form.GetLength(0);
+            int cols = this.form.GetLength(1);
+            PrintOnPosition(rows, cols);
         }
 
 
