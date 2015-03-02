@@ -50,7 +50,7 @@ namespace test
             {
                 int chance = generator.Next(1, 201);
 
-                if (chance >= 30 && chance <= 32 && distanceBetweenPickups >5)
+                if (chance >= 30 && chance <= 32 && distanceBetweenPickups > 5)
                 {
                     switch (chance)
                     {
@@ -124,10 +124,10 @@ namespace test
                 {
                     if (!pickupContainer[i].IsActive)
                     { 
-                          if (pickupContainer[i].X > 0)
-                          {
-                              pickupContainer[i].DrawObstacle();
-                          }
+                        if (pickupContainer[i].X > 0)
+                        {
+                            pickupContainer[i].DrawObstacle();
+                        }
                         else if (pickupContainer[i].X <= 0)
                         {
                             pickupContainer.RemoveAt(i);
@@ -135,7 +135,7 @@ namespace test
                         /*else if (DetectCollision(pickupContainer[i], runner))
                         {
                         pickupContainer[i].Activate();
-                         * 
+                        * 
                         }*/
                     }
                     else
@@ -144,7 +144,7 @@ namespace test
                     }
                 }
 
-                PauseResume(playing);
+                ManageInput(playing);
                 distanceBetweenPickups++;
                 distanceBetweenObstacles++;
                 startResult += 10;
@@ -166,27 +166,25 @@ namespace test
             Console.Write("High Score: {0}", high);
         }
 
-        static void PauseResume(bool play)
+        static void ManageInput(bool play)
         {
             if (Console.KeyAvailable)
             {
                 ConsoleKeyInfo press = Console.ReadKey(true);
-                if (press.Key == ConsoleKey.Escape)
+                switch (press.Key)
                 {
-                    play = false;
-                    Console.SetCursorPosition(51, 7);
-                    Console.Write("Game is now paused");
-                    Console.SetCursorPosition(50, 8);
-                    Console.Write("Press ESC to continue");
-                    ConsoleKeyInfo pressAgain = Console.ReadKey(true);
-                    while (pressAgain.Key != ConsoleKey.Escape)
-                    {
-                        pressAgain = Console.ReadKey(true);
-                    }
-                    if (pressAgain.Key == ConsoleKey.M)
-                    {
-                        play = true;
-                    }
+                    case ConsoleKey.Escape:
+                        play = false;
+                        Console.SetCursorPosition(51, 7);
+                        Console.Write("Game is now paused");
+                        Console.SetCursorPosition(50, 8);
+                        Console.Write("Press ESC to continue");
+                        ConsoleKeyInfo pressAgain = Console.ReadKey(true);
+                        while (pressAgain.Key != ConsoleKey.Escape)
+                        {
+                            pressAgain = Console.ReadKey(true);
+                        }
+                        break;
                 }
             }
         }
@@ -201,14 +199,13 @@ namespace test
 
         static void Start()
         {
-           
             char[,] trollRunnerLetters;
             trollRunnerLetters = GraphicsManagement.GetGraphic("startmenu");
             int shift = (Console.WindowWidth - StartScreenWidth) / 2;
             for (int row = 0; row < StartScreenHeight; row++)
             {
                 for (int col = 0; col < StartScreenWidth; col++)
-                {                   
+                { 
                     Console.SetCursorPosition(col + shift, row);
                     Console.Write(trollRunnerLetters[row, col]);
                 }
@@ -220,7 +217,7 @@ namespace test
                 Console.Write("-");
             }
             Console.WriteLine();
-            string game = "THE GAME".PadLeft(Console.WindowWidth/2);
+            string game = "THE GAME".PadLeft(Console.WindowWidth / 2);
             Console.WriteLine(game);
             
             Console.WriteLine();
