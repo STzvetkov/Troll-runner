@@ -45,9 +45,11 @@ namespace test
             bool playing = true;
 
             Start();
-
+            
             while (playing)
             {
+                
+                
                 int chance = generator.Next(1, 201);
 
                 if (chance >= 30 && chance <= 32 && distanceBetweenPickups > 5)
@@ -230,7 +232,7 @@ namespace test
             playerName = Console.ReadLine();
         }
 
-        public static bool DetectCollision(List<LandObstacle> traps, Runner troll)
+        public static bool DetectCollisionWithTrap(List<LandObstacle> traps, Runner troll)
         {
             foreach (LandObstacle trap in traps)
             {
