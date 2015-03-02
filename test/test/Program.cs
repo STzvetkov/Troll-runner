@@ -229,5 +229,30 @@ namespace test
             Console.Write("Please enter player name: ".PadLeft(30));
             playerName = Console.ReadLine();
         }
+
+        public static bool DetectCollisionWithTrap(List<LandObstacle> traps, Runner troll)
+        {
+            for (int i = 0; i < traps.Count; i++)
+            {
+                LandObstacle trap = traps[i];
+                if (trap.X == troll.X && trap.Y == troll.Y)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static bool DirectCollisionWithoutTrap(List<Pickup> pickups, Runner troll)
+        {
+            for (int i = 0; i < pickups.Count; i++)
+            {
+                Pickup pickup = pickups[i];
+                if (pickup.X == troll.X && pickup.Y == troll.Y)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
