@@ -279,18 +279,20 @@ namespace test
         {
 
             reader.Close();
-            var writer = new StreamWriter(@"..\..\data\HighScores.txt");
+            
             Console.SetCursorPosition(21, 12);
             if (currentScore >= highScore)
-            {                
+            {
+                var writer = new StreamWriter(@"..\..\data\HighScores.txt");           
                 Console.WriteLine("Congratulations {0} you set a new highscore of:{1} points", playerName, currentScore);
                 writer.WriteLine(currentScore);
+                writer.Close();
             }
             else
             {                
                 Console.WriteLine("{0} you were unable to beat the current highscore! Your score is:{1} points", playerName, currentScore);
             }
-            writer.Close();
+            
             Console.ReadLine();
         }
 
