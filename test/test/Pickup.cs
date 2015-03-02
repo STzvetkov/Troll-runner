@@ -8,28 +8,55 @@ namespace test
 {
     public class Pickup : Obstacle
     {
-        private const int NumberOfRows = 2;
-        private const int NumberOfCols = 5;
+        private const int NumberOfRows = 3;
+        private const int NumberOfCols = 4;
+        public enum PickupType {Slow, Fire, Life};
 
-        public Pickup(int x, int y)
+        private PickupType bonusType;
+        private int duration;
+        public bool IsActive { get; private set; }
+        public Pickup(int x, int y, PickupType type)
             : base(x, y)
         {
             this.form = new char[NumberOfRows, NumberOfCols];
-            FillPickup();
+            this.bonusType = type;
+            this.IsActive = false;
+            this.duration = 0;
+            FillPickup();             
         }
 
+        public void Activate()
+        {
+            switch (this.bonusType)
+            {
+                case PickupType.Slow:
+                    this.IsActive = true;
+                    this.duration = Game.generator.Next(10000, 30001);
+                    Game.gameSpeed = Game.MinSpeed;
+                    break;
+                case PickupType.Fire:
+                    this.IsActive = true;
+                    this.duration = Game.generator.Next(5000, 20001);
+                    Game.ableToFire = true;
+                    break;
+                case PickupType.Life:
+                    Game.currentLifes = Math.Min(Game.InitialLifes, Game.currentLifes + 1);
+                    break;
+            }
+        }
+
+        public void Expire ()
+        {
+            this.duration = Math.Max(0, this.duration - Game.SleepTime);
+            if ( this.duration == 0)
+            {
+                this.IsActive = false;
+            }
+        }
         private void FillPickup()
         {
-            this.form[0, 0] = ' ';
-            this.form[0, 1] = '.';
-            this.form[0, 2] = '\'';
-            this.form[0, 3] = ')';
-            this.form[0, 4] = ' ';
-            this.form[1, 0] = '(';
-            this.form[1, 1] = '_';
-            this.form[1, 2] = ' ';
-            this.form[1, 3] = ' ';
-            this.form[1, 4] = ')';
+            string fileName = this.bonusType.ToString();
+            this.form = GraphicsManagement.GetGraphic(fileName);
         }
     }
 }
