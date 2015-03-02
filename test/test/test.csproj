@@ -63,6 +63,7 @@
     <Content Include="graphics\obstacle1.txt" />
     <Content Include="graphics\Slow.txt" />
     <Content Include="graphics\startmenu.txt" />
+    <Content Include="graphics\Troll.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
