@@ -48,23 +48,24 @@ namespace test
         public static void InitializeGraphics()
         {
             string[] fileEntries = Directory.GetFiles(FolderName);
-            int index;
-            int size;
-            string[] fileData;           
-            foreach (string fileName in fileEntries)
+            int imageWidth, imageHeight;
+            string[] fileData; 
+            string imageName="";
+            foreach (string fullFileName in fileEntries)
             {
-                fileData = File.ReadAllLines(fileName);                
-                size = fileData[0].Length;
-                char[,] image = new char[size, size];
-                index = 0;
-                foreach (string fileLine in fileData)
+                fileData = File.ReadAllLines(fullFileName);
+                imageHeight = fileData.GetLength(0);
+                imageWidth = fileData[0].Length;
+                char[,] image = new char[imageHeight, imageWidth];
+                for (int i = 0; i < imageHeight; i++)
                 {
-                    for (int i = 0; i < fileLine.Length; i++)
+                    for (int j = 0; j < imageWidth; j++)
                     {
-                        image[index, i] = fileLine[i];
+                        image[i, j] = fileData[i][j];
                     }
-                    index++;  
                 }
+                imageName = System.IO.Path.GetFileName(fullFileName).Replace(".txt", "");
+                graphicsContainer.Add(imageName, image);
             }
         }
     }

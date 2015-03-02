@@ -20,13 +20,13 @@ namespace test
 
         public int Y { get; private set; }
 
-        protected virtual void PrintOnPosition(int cloudRows, int cloudCols)
+        protected virtual void PrintOnPosition(int obstacleRows, int obstacleCols)
         {
             if (this.X > 3)
             {
-                for (int row = 0; row < cloudRows; row++)
+                for (int row = 0; row < obstacleRows; row++)
                 {
-                    for (int col = 0; col < cloudCols; col++)
+                    for (int col = 0; col < obstacleCols; col++)
                     {
                         Console.SetCursorPosition(col + this.X, row + this.Y);
                         Console.Write(this.form[row, col]);
@@ -35,10 +35,10 @@ namespace test
             }
             else if (this.X <= 3)
             {
-                for (int row = 0; row < cloudRows; row++)
+                for (int row = 0; row < obstacleRows; row++)
                 {
                     int moveCursor = 0;
-                    for (int col = 4; col >= cloudCols; col--)
+                    for (int col = 4; col >= obstacleCols; col--)
                     {
                         Console.SetCursorPosition(this.X - moveCursor, row + this.Y);
                         Console.Write(this.form[row, col]);
@@ -57,37 +57,13 @@ namespace test
         {
             int rows = this.form.GetLength(0);
             int cols = this.form.GetLength(1);
-            if (this.X == Console.WindowWidth - 4)
+            if ((this.X >= Console.WindowWidth - 4) && (this.X <= Console.WindowWidth - 1))
             {
-                PrintOnPosition(rows, cols - 1);
+                PrintOnPosition(rows, cols - (5 - Console.WindowWidth + this.X));
             }
-            else if (this.X == Console.WindowWidth - 3)
+            else if ((this.X >= 0) && (this.X <= 3))
             {
-                PrintOnPosition(rows, cols - 2);
-            }
-            else if (this.X == Console.WindowWidth - 2)
-            {
-                PrintOnPosition(rows, cols - 3);
-            }
-            else if (this.X == Console.WindowWidth - 1)
-            {
-                PrintOnPosition(rows, cols - 4);
-            }
-            else if (this.X == 3)
-            {
-                PrintOnPosition(rows, 1);
-            }
-            else if (this.X == 2)
-            {
-                PrintOnPosition(rows, 2);
-            }
-            else if (this.X == 1)
-            {
-                PrintOnPosition(rows, 3);
-            }
-            else if (this.X == 0)
-            {
-                PrintOnPosition(rows, 4);
+                PrintOnPosition(rows, 4 - this.X);
             }
             else
             {

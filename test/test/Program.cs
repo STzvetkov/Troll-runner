@@ -17,6 +17,8 @@ namespace test
         {
             Console.Title = ("Troll runner");
 
+            GraphicsManagement.InitializeGraphics();  // Load graphics from the corresponding files
+
             Random generator = new Random();
             List<AerialObstacle> cloudsContainer = new List<AerialObstacle>();
             List<LandObstacle> trapsContainer = new List<LandObstacle>();
@@ -30,8 +32,8 @@ namespace test
             string[] scores = System.IO.File.ReadAllLines(fileName);
             string highscore = scores[0];
             bool playing = true;
-
             
+
             while (playing)
             {
                
