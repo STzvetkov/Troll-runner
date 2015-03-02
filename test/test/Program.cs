@@ -260,7 +260,7 @@ namespace test
             Console.Clear();
             char[,] gameover;
             gameover = GraphicsManagement.GetGraphic("gameover");
-            int shift = (Console.WindowWidth - StartScreenWidth) / 2;
+            int shift = (Console.WindowWidth - GameOverScreenWidth) / 2;
             for (int row = 0; row < GameOverScreenHeight; row++)
             {
                 for (int col = 0; col < GameOverScreenWidth; col++)
@@ -282,20 +282,16 @@ namespace test
             var writer = new StreamWriter(@"..\..\data\HighScores.txt");
             Console.SetCursorPosition(21, 12);
             if (currentScore >= highScore)
-            {
-                
+            {                
                 Console.WriteLine("Congratulations {0} you set a new highscore of:{1} points", playerName, currentScore);
                 writer.WriteLine(currentScore);
             }
             else
-            {
-                
+            {                
                 Console.WriteLine("{0} you were unable to beat the current highscore! Your score is:{1} points", playerName, currentScore);
-                writer.WriteLine(highScore);
             }
             writer.Close();
             Console.ReadLine();
-
         }
 
         public static int DetectCollisionWithTrap(List<LandObstacle> traps, Runner troll)
