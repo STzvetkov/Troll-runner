@@ -45,23 +45,28 @@ namespace test
             }
         }
 
+        public void Deactivate()
+        {
+
+            this.IsActive = false;
+            switch (this.bonusType)
+            {
+                case PickupType.Slow:
+                    Game.gameSpeed = Math.Min(Game.MaxSpeed, Game.gameSpeed + 1);
+                    break;
+                case PickupType.Fire:
+                    Game.ableToFire = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public void Expire ()
         {
             this.duration = Math.Max(0, this.duration - Game.SleepTime);
             if ( this.duration == 0)
             {
-                this.IsActive = false;
-                switch (this.bonusType)
-                {
-                    case PickupType.Slow:                        
-                        Game.gameSpeed = Math.Min(Game.MaxSpeed, Game.gameSpeed+1);
-                        break;
-                    case PickupType.Fire:
-                        Game.ableToFire = false;
-                        break;
-                    default:
-                        break;
-                }
             }
         }
         private void FillPickup()

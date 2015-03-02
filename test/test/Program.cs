@@ -16,12 +16,16 @@ namespace test
         public const int SleepTime = 50;
         public const int StartScreenWidth = 92;
         public const int StartScreenHeight = 8;
+        public const int GameOverScreenWidth = 68;
+        public const int GameOverScreenHeight = 8;
 
         public static string playerName;
         public static int gameSpeed = MinSpeed;
         public static int currentLifes = InitialLifes;
         public static bool ableToFire = false;
         public static Runner troll;
+        public static int currentScore;
+        public static int highScore;
 
         public static Random generator = new Random();
        
@@ -40,18 +44,17 @@ namespace test
             int distanceBetweenObstacles = 0;
             int distanceBetweenPickups = 0;
                        
-            int startResult = 0;
+            currentScore = 0;
             string fileName = @"../../data/HighScores.txt";        
             string[] scores = System.IO.File.ReadAllLines(fileName);
-            string highscore = scores[0];
+            string highScoreStr = scores[0];
+            highScore = int.Parse(highScoreStr);
             bool playing = true;
 
             Start();
             
             while (playing)
             {
-                
-                
                 int chance = generator.Next(1, 201);
 
                 if (chance >= 30 && chance <= 32 && distanceBetweenPickups > 5)
@@ -102,7 +105,7 @@ namespace test
                
                 Console.Clear();
                
-                Score(startResult, highscore);
+                Score(currentScore, highScoreStr);
                 trollPath.DrawPath();
                 troll.DrawTroll();
                 
@@ -111,9 +114,7 @@ namespace test
                     cloudsContainer[i].DrawObstacle();
 
                     if (cloudsContainer[i].X == 0)
-                    {
                         cloudsContainer.RemoveAt(i);
-                    }
                 }
 
                 for (int i = 0; i < trapsContainer.Count; i++)
@@ -156,23 +157,21 @@ namespace test
                 Pickup colidedPickup = DirectCollisionWithPickup(pickupContainer, troll);
                 if (colidedPickup != null)
                 {
-                    currentLifes++;
-                    colidedPickup.IsActive = false;
+                    colidedPickup.Activate();
                 }
-                if (DetectCollisionWithTrap(trapsContainer, troll))
+                int trapIndex = DetectCollisionWithTrap(trapsContainer, troll);
+                if (trapIndex >= 0)
                 {
                     currentLifes--;
-                    if (currentLifes <= 0)
-                    {
+                    trapsContainer.RemoveAt(trapIndex);
+                    playing = currentLifes > 0;
+                    if (!playing)
                         Gameover();
-                    }
                 }
-                
-
 
                 distanceBetweenPickups++;
                 distanceBetweenObstacles++;
-                startResult += 10;
+                currentScore += 10;
                 Thread.Sleep(SleepTime);             
             }
 
@@ -263,41 +262,53 @@ namespace test
 
         static void Gameover()
         {
+            Console.Clear();
             char[,] gameover;
             gameover = GraphicsManagement.GetGraphic("gameover");
             int shift = (Console.WindowWidth - StartScreenWidth) / 2;
-            for (int row = 0; row < StartScreenHeight; row++)
+            for (int row = 0; row < GameOverScreenHeight; row++)
             {
-                for (int col = 0; col < StartScreenWidth; col++)
+                for (int col = 0; col < GameOverScreenWidth; col++)
                 {
-                    Console.SetCursorPosition(col + shift, row);
-                    Console.Write(gameover[col, row]);
+                    Console.SetCursorPosition(col + shift, row + 2);
+                    Console.Write(gameover[row, col]);
                 }
             }
             Console.WriteLine();
-            Console.WriteLine("Your score {0}" );
-
+            Console.WriteLine();
+            Console.WriteLine();
+            if (currentScore > highScore)
+                Console.WriteLine("Congratulations! New record: {0}".PadLeft(Console.WindowWidth / 2), currentScore);
+            else
+                Console.WriteLine("Your score is: {0} . Try harder next time.".PadLeft(Console.WindowWidth / 2), currentScore);
+            Console.ReadLine();
         }
-        public static bool DetectCollisionWithTrap(List<LandObstacle> traps, Runner troll)
+
+        public static int DetectCollisionWithTrap(List<LandObstacle> traps, Runner troll)
         {
+            int index = 0;
             foreach (LandObstacle trap in traps)
             {
-                if ((troll.X + Runner.NumberOfCols >= trap.X) &&
-                    (troll.X + Runner.NumberOfCols <= trap.X + LandObstacle.NumberOfCols) &&
-                    (troll.Y <= trap.Y - LandObstacle.NumberOfRows))
+                if ((troll.X + Runner.NumberOfCols - 1 >= trap.X) &&
+                    (troll.X <= trap.X + LandObstacle.NumberOfCols - 1) &&
+                    (troll.Y >= trap.Y - LandObstacle.NumberOfRows + 1))
                 {
-                    return true;
+                    return index;
                 }
+                index++;
             }
-            return false;
+            return -1;
         }
+
         public static Pickup DirectCollisionWithPickup(List<Pickup> pickups, Runner troll)
         {
             foreach (Pickup bonus in pickups)
             {
-                if ((troll.X + Runner.NumberOfCols >= bonus.X) &&
-                    (troll.X + Runner.NumberOfCols <= bonus.X + Pickup.NumberOfCols) &&
-                    (troll.Y - Runner.NumberOfRows >= bonus.Y))
+                if ((troll.X + Runner.NumberOfCols - 1 >= bonus.X) &&
+                    (troll.X <= bonus.X + Pickup.NumberOfCols - 1) &&
+                    ((troll.Y - bonus.Y <= Runner.NumberOfRows - 1) ||
+                     (bonus.Y - troll.Y <= 0)) &&
+                    bonus.IsActive)
                 {
                     return bonus;
                 }
