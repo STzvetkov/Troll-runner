@@ -12,25 +12,23 @@ namespace test
 
         public const int NumberOfCols = 3;
 
-        private const int MaxJumpHeight = 10;
+        private const int MaxJumpHeight = 12;
+        private const int MaxJumpStage = 7;
 
         private bool hasJumped = false;
-        private bool doubleJump = false;
+        private bool isFalling = false;
         private int jumpHeight = 0;
         private int jumpStage;
 
-        public Runner(int x, int y)
-            : base(x, y)
+        public Runner(int x, int y) : base(x, y)
         {
             this.form = new char[NumberOfCols, NumberOfRows];
             FillTroll();
         }
 
-
         private void FillTroll()
         {
             this.form = GraphicsManagement.GetGraphic("Troll");
-
         }
 
         private void PrintTrollOnPosition(int x, int y)
@@ -50,13 +48,13 @@ namespace test
             PrintTrollOnPosition(NumberOfRows, NumberOfCols);
         }
 
-
         private void MoveUp()
         {
             //if (this.Y > JumpHeight)
             //{
             this.Y--;
             this.jumpHeight++;
+            this.jumpStage++;
             //}  
         }
 
@@ -71,26 +69,28 @@ namespace test
 
         public void Move()
         {
-            if (this.hasJumped)
+            if (this.hasJumped && !this.isFalling)
             {
-                if (this.jumpHeight < MaxJumpHeight)
+                if (this.jumpHeight < MaxJumpHeight && this.jumpStage < MaxJumpStage)
                 {
                     this.MoveUp();
                 }
-                else if (this.jumpHeight == MaxJumpHeight || doubleJump)
+                else
                 {
-                    this.hasJumped = false;
+                    this.isFalling = true;
+                    this.jumpStage = 0;
                 }
             }
             else
             {
-                if (this.jumpHeight > 0)
+                if (this.isFalling && this.jumpHeight > 0)
                 {
                     this.MoveDown();
                 }
-                else
+                else if (this.jumpHeight == 0)
                 {
-                    this.doubleJump = false;
+                    this.isFalling = false;
+                    this.hasJumped = false;
                 }
             }
         }
@@ -99,10 +99,7 @@ namespace test
         {
             if (this.hasJumped)
             {
-                if (jumpStage < 10)
-                {
-                    this.doubleJump = true;   
-                }
+                this.jumpStage = 0;
             }
             else
             {
@@ -110,9 +107,5 @@ namespace test
                 this.jumpStage = 0;
             }
         }
-
-        
     }
 }
-    
-
