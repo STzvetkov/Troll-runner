@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="data\HighScores.txt" />
     <Content Include="graphics\cloud1.txt" />
     <Content Include="graphics\Fire.txt" />
     <Content Include="graphics\Life.txt" />
