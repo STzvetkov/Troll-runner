@@ -12,10 +12,17 @@ namespace test
 
         public const int NumberOfCols = 3;
 
+        private const int MaxJumpHeight = 10;
+
+        private bool hasJumped = false;
+        private bool doubleJump = false;
+        private int jumpHeight = 0;
+
         public Runner(int x, int y)
             : base(x, y)
         {
-            this.form = new char[NumberOfRows, NumberOfCols];
+            this.form = new char[NumberOfCols, NumberOfRows];
+            FillTroll();
         }
 
 
@@ -27,24 +34,79 @@ namespace test
 
         private void PrintTrollOnPosition(int x, int y)
         {
-            Console.Write(this.form[3, 3]);
+            for (int row = 0; row < NumberOfRows; row++)
+            {
+                for (int col = 0; col < NumberOfCols; col++)
+                {
+                    Console.SetCursorPosition(col + this.X, this.Y - row);
+                    Console.Write(this.form[row, col]);
+                }
+            }
         }
 
         public void DrawTroll()
         {
-            int rows = this.form.GetLength(0);
-            int cols = this.form.GetLength(1);
-            PrintOnPosition(rows, cols);
+            PrintTrollOnPosition(NumberOfRows, NumberOfCols);
         }
 
+
+        private void MoveUp()
+        {
+            //if (this.Y > JumpHeight)
+            //{
+            this.Y--;
+            this.jumpHeight++;
+            //}  
+        }
+
+        private void MoveDown()
+        {
+            //if (this.Y < Start)
+            //{
+            this.Y++;
+            this.jumpHeight--;
+            //}
+        }
+
+        public void Move()
+        {
+            if (this.hasJumped)
+            {
+                if (this.jumpHeight < MaxJumpHeight && !doubleJump)
+                {
+                    this.MoveUp();
+                }
+                else if (this.jumpHeight == MaxJumpHeight || doubleJump)
+                {
+                    this.hasJumped = false;
+                }
+            }
+            else
+            {
+                if (this.jumpHeight > 0)
+                {
+                    this.MoveDown();
+                }
+                else
+                {
+                    this.doubleJump = false;
+                }
+            }
+        }
 
         public void Jump()
         {
-            for (int i = 0; i < 3; i++)
+            if (this.hasJumped)
             {
-                this.Y++;
+                this.doubleJump = true;
+            }
+            else
+            {
+                this.hasJumped = true;
             }
         }
+
+        
     }
 }
     

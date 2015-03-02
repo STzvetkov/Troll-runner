@@ -21,6 +21,7 @@ namespace test
         public static int gameSpeed = MinSpeed;
         public static int currentLifes = InitialLifes;
         public static bool ableToFire = false;
+        public static Runner troll;
 
         public static Random generator = new Random();
        
@@ -33,6 +34,7 @@ namespace test
             List<AerialObstacle> cloudsContainer = new List<AerialObstacle>();
             List<LandObstacle> trapsContainer = new List<LandObstacle>();
             List<Pickup> pickupContainer = new List<Pickup>();
+            troll = new Runner(10, 20);
             Path trollPath = new Path();
             SetFieldSize();
             int distanceBetweenObstacles = 0;
@@ -95,11 +97,14 @@ namespace test
                 {
                     pickup.MoveObstacle(gameSpeed);
                 }
+
+                troll.Move();
                
                 Console.Clear();
                
                 Score(startResult, highscore);
                 trollPath.DrawPath();
+                troll.DrawTroll();
                 
                 for (int i = 0; i < cloudsContainer.Count; i++)
                 {
@@ -189,6 +194,9 @@ namespace test
                         {
                             pressAgain = Console.ReadKey(true);
                         }
+                        break;
+                    case ConsoleKey.Spacebar:
+                        troll.Jump();
                         break;
                 }
             }
