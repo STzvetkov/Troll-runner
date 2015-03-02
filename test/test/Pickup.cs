@@ -8,8 +8,8 @@ namespace test
 {
     public class Pickup : Obstacle
     {
-        private const int NumberOfRows = 3;
-        private const int NumberOfCols = 4;
+        public const int NumberOfRows = 3;
+        public const int NumberOfCols = 4;
         public enum PickupType {Slow, Fire, Life};
 
         private PickupType bonusType;

@@ -230,24 +230,26 @@ namespace test
             playerName = Console.ReadLine();
         }
 
-        public static bool DetectCollisionWithTrap(List<LandObstacle> traps, Runner troll)
+        public static bool DetectCollision(List<LandObstacle> traps, Runner troll)
         {
-            for (int i = 0; i < traps.Count; i++)
+            foreach (LandObstacle trap in traps)
             {
-                LandObstacle trap = traps[i];
-                if (trap.X == troll.X && trap.Y == troll.Y)
+                if ((troll.X + Runner.NumberOfCols >= trap.X) &&
+                    (troll.X + Runner.NumberOfCols <= trap.X + LandObstacle.NumberOfCols) &&
+                    (troll.Y <= trap.Y + LandObstacle.NumberOfRows))
                 {
                     return true;
                 }
             }
             return false;
         }
-        public static bool DirectCollisionWithoutTrap(List<Pickup> pickups, Runner troll)
+        public static bool DirectCollisionWithPickup(List<Pickup> pickups, Runner troll)
         {
-            for (int i = 0; i < pickups.Count; i++)
+            foreach (Pickup bonus in pickups)
             {
-                Pickup pickup = pickups[i];
-                if (pickup.X == troll.X && pickup.Y == troll.Y)
+                if ((troll.X + Runner.NumberOfCols >= bonus.X) &&
+                    (troll.X + Runner.NumberOfCols <= bonus.X + Pickup.NumberOfCols) &&
+                    (troll.Y + Runner.NumberOfRows >= bonus.Y))
                 {
                     return true;
                 }

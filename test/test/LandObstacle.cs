@@ -8,9 +8,9 @@ namespace test
 {
     public class LandObstacle : Obstacle
     {
-        private const int NumberOfRows = 2;
+        public const int NumberOfRows = 2;
 
-        private const int NumberOfCols = 2;
+        public const int NumberOfCols = 2;
 
         public LandObstacle(int x, int y)
             : base(x, y)

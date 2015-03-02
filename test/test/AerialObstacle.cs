@@ -8,8 +8,8 @@ namespace test
 {
     public class AerialObstacle : Obstacle
     {
-        private const int NumberOfRows = 2;
-        private const int NumberOfCols = 5;
+        public const int NumberOfRows = 2;
+        public const int NumberOfCols = 5;
 
         public AerialObstacle(int x, int y)
             : base(x, y)
