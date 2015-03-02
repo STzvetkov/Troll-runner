@@ -24,8 +24,9 @@ namespace test
         public static int currentLifes = InitialLifes;
         public static bool ableToFire = false;
         public static Runner troll;
-        public static int currentScore;
-        public static int highScore;
+        static int currentScore = 0;
+        static public StreamReader reader = new StreamReader(@"..\..\data\HighScores.txt");
+        static public int highScore = int.Parse(reader.ReadLine());
 
         public static Random generator = new Random();
        
@@ -43,12 +44,6 @@ namespace test
             SetFieldSize();
             int distanceBetweenObstacles = 0;
             int distanceBetweenPickups = 0;
-                       
-            currentScore = 0;
-            string fileName = @"../../data/HighScores.txt";        
-            string[] scores = System.IO.File.ReadAllLines(fileName);
-            string highScoreStr = scores[0];
-            highScore = int.Parse(highScoreStr);
             bool playing = true;
 
             Start();
@@ -105,7 +100,7 @@ namespace test
                
                 Console.Clear();
                
-                Score(currentScore, highScoreStr);
+                Score(currentScore);
                 trollPath.DrawPath();
                 troll.DrawTroll();
                 
@@ -178,21 +173,21 @@ namespace test
             Console.CursorVisible = false;
         }
 
-        static void Score(int result, string high)
+        static void Score(int result)
         {
             Console.SetCursorPosition(0, Console.BufferHeight - 1);
             Console.Write(" Score: {0}", result);
 
-            Console.SetCursorPosition((17 - high.Length - 1), Console.BufferHeight - 1);
-            Console.Write("/ {0}", high);
+            Console.SetCursorPosition((17 - highScore.ToString().Length - 1), Console.BufferHeight - 1);
+            Console.Write("/ {0}", highScore);
 
-            Console.SetCursorPosition((62 - high.Length - 1), Console.BufferHeight - 1);
+            Console.SetCursorPosition((62 - highScore.ToString().Length - 1), Console.BufferHeight - 1);
             Console.Write("Press ESC to pause");
 
-            Console.SetCursorPosition((89 - high.Length - 1), Console.BufferHeight - 1);
+            Console.SetCursorPosition((89 - highScore.ToString().Length - 1), Console.BufferHeight - 1);
             Console.Write("Lives: {0}", currentLifes);
 
-            Console.SetCursorPosition((108 - high.Length - 1), Console.BufferHeight - 1);
+            Console.SetCursorPosition((108 - highScore.ToString().Length - 1), Console.BufferHeight - 1);
             Console.Write("Player: {0}", playerName);
         }
 
@@ -277,11 +272,30 @@ namespace test
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-            if (currentScore > highScore)
-                Console.WriteLine("Congratulations! New record: {0}".PadLeft(Console.WindowWidth / 2), currentScore);
+            HighScore();
+            
+        }
+        static void HighScore()
+        {
+
+            reader.Close();
+            var writer = new StreamWriter(@"..\..\data\HighScores.txt");
+            Console.SetCursorPosition(21, 12);
+            if (currentScore >= highScore)
+            {
+                
+                Console.WriteLine("Congratulations {0} you set a new highscore of:{1} points", playerName, currentScore);
+                writer.WriteLine(currentScore);
+            }
             else
-                Console.WriteLine("Your score is: {0} . Try harder next time.".PadLeft(Console.WindowWidth / 2), currentScore);
+            {
+                
+                Console.WriteLine("{0} you were unable to beat the current highscore! Your score is:{1} points", playerName, currentScore);
+                writer.WriteLine(highScore);
+            }
+            writer.Close();
             Console.ReadLine();
+
         }
 
         public static int DetectCollisionWithTrap(List<LandObstacle> traps, Runner troll)
