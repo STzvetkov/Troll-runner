@@ -11,6 +11,7 @@ namespace test
     class Game  
     {
         public const int MinSpeed = 1;
+        public const int MaxSpeed = 3;
         public const int InitialLifes = 3;
         public const int SleepTime = 50;
         public const int StartScreenWidth = 92;
@@ -35,6 +36,7 @@ namespace test
             Path trollPath = new Path();
             SetFieldSize();
             int distanceBetweenObstacles = 0;
+            int distanceBetweenPickups = 0;
                        
             int startResult = 0;
             string fileName = System.IO.Path.GetFullPath(Directory.GetCurrentDirectory() + @"\HighScores.txt");        
@@ -46,33 +48,32 @@ namespace test
 
             while (playing)
             {
-                int chance = generator.Next(1, 101);
+                int chance = generator.Next(1, 201);
 
-                if (chance >= 30 && chance <= 35)
+                if (chance >= 30 && chance <= 32 && distanceBetweenPickups >5)
                 {
                     switch (chance)
                     {
-                        case 30: case 31:
+                        case 30:
                             pickupContainer.Add(new Pickup(Console.WindowWidth - 1, 8, Pickup.PickupType.Fire));
                             break;
-                        case 32:
-                        case 33:
+                        case 31:
                             pickupContainer.Add(new Pickup(Console.WindowWidth - 1, 8, Pickup.PickupType.Life));
                             break;
-                        case 34:
-                        case 35:
+                        case 32:
                             pickupContainer.Add(new Pickup(Console.WindowWidth - 1, 8, Pickup.PickupType.Slow));
                             break;
                     }
+                    distanceBetweenPickups = 0;
                 }
 
-                if (chance < 30)
+                if (chance < 20)
                 {
                     int secondChance = generator.Next(0, 4);
                     cloudsContainer.Add(new AerialObstacle(Console.WindowWidth - 1, secondChance));
                 }
 
-                if (chance < 30 && distanceBetweenObstacles > 10)
+                if (chance < 20 && distanceBetweenObstacles > 10)
                 {
                     trapsContainer.Add(new LandObstacle(Console.WindowWidth - 1, Console.WindowHeight - 3));
                     distanceBetweenObstacles = 0;
@@ -123,10 +124,10 @@ namespace test
                 {
                     if (!pickupContainer[i].IsActive)
                     { 
-                        if (pickupContainer[i].X > 0)
-                        {
-                            pickupContainer[i].DrawObstacle();
-                        }
+                          if (pickupContainer[i].X > 0)
+                          {
+                              pickupContainer[i].DrawObstacle();
+                          }
                         else if (pickupContainer[i].X <= 0)
                         {
                             pickupContainer.RemoveAt(i);
@@ -134,6 +135,7 @@ namespace test
                         /*else if (DetectCollision(pickupContainer[i], runner))
                         {
                         pickupContainer[i].Activate();
+                         * 
                         }*/
                     }
                     else
@@ -143,6 +145,7 @@ namespace test
                 }
 
                 PauseResume(playing);
+                distanceBetweenPickups++;
                 distanceBetweenObstacles++;
                 startResult += 10;
                 Thread.Sleep(SleepTime);             

@@ -51,6 +51,17 @@ namespace test
             if ( this.duration == 0)
             {
                 this.IsActive = false;
+                switch (this.bonusType)
+                {
+                    case PickupType.Slow:                        
+                        Game.gameSpeed = Math.Min(Game.MaxSpeed, Game.gameSpeed+1);
+                        break;
+                    case PickupType.Fire:
+                        Game.ableToFire = false;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         private void FillPickup()
