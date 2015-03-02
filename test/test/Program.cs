@@ -152,6 +152,24 @@ namespace test
                 }
 
                 ManageInput(playing);
+
+                Pickup colidedPickup = DirectCollisionWithPickup(pickupContainer, troll);
+                if (colidedPickup != null)
+                {
+                    currentLifes++;
+                    colidedPickup.IsActive = false;
+                }
+                if (DetectCollisionWithTrap(trapsContainer, troll))
+                {
+                    currentLifes--;
+                    if (currentLifes <= 0)
+                    {
+                        Gameover();
+                    }
+                }
+                
+
+
                 distanceBetweenPickups++;
                 distanceBetweenObstacles++;
                 startResult += 10;
@@ -171,6 +189,9 @@ namespace test
 
             Console.SetCursorPosition((62 - high.Length - 1), Console.BufferHeight - 1);
             Console.Write("Press ESC to pause");
+
+            Console.SetCursorPosition((89 - high.Length - 1), Console.BufferHeight - 1);
+            Console.Write("Lives: {0}", currentLifes);
 
             Console.SetCursorPosition((108 - high.Length - 1), Console.BufferHeight - 1);
             Console.Write("Player: {0}", playerName);
@@ -240,31 +261,48 @@ namespace test
             playerName = Console.ReadLine();
         }
 
+        static void Gameover()
+        {
+            char[,] gameover;
+            gameover = GraphicsManagement.GetGraphic("gameover");
+            int shift = (Console.WindowWidth - StartScreenWidth) / 2;
+            for (int row = 0; row < StartScreenHeight; row++)
+            {
+                for (int col = 0; col < StartScreenWidth; col++)
+                {
+                    Console.SetCursorPosition(col + shift, row);
+                    Console.Write(gameover[col, row]);
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine("Your score {0}" );
+
+        }
         public static bool DetectCollisionWithTrap(List<LandObstacle> traps, Runner troll)
         {
             foreach (LandObstacle trap in traps)
             {
                 if ((troll.X + Runner.NumberOfCols >= trap.X) &&
                     (troll.X + Runner.NumberOfCols <= trap.X + LandObstacle.NumberOfCols) &&
-                    (troll.Y <= trap.Y + LandObstacle.NumberOfRows))
+                    (troll.Y <= trap.Y - LandObstacle.NumberOfRows))
                 {
                     return true;
                 }
             }
             return false;
         }
-        public static bool DirectCollisionWithPickup(List<Pickup> pickups, Runner troll)
+        public static Pickup DirectCollisionWithPickup(List<Pickup> pickups, Runner troll)
         {
             foreach (Pickup bonus in pickups)
             {
                 if ((troll.X + Runner.NumberOfCols >= bonus.X) &&
                     (troll.X + Runner.NumberOfCols <= bonus.X + Pickup.NumberOfCols) &&
-                    (troll.Y + Runner.NumberOfRows >= bonus.Y))
+                    (troll.Y - Runner.NumberOfRows >= bonus.Y))
                 {
-                    return true;
+                    return bonus;
                 }
             }
-            return false;
+            return null;
         }
     }
 }
