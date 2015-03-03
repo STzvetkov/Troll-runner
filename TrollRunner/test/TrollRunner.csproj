@@ -7,7 +7,7 @@
     <ProjectGuid>{CBE3E145-2CBF-4542-B3C2-CC78595FF9D1}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>test</RootNamespace>
+    <RootNamespace>TrollRunner</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

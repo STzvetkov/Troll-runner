@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace test
+namespace TrollRunner
 {
     class Game  
     {
@@ -21,6 +21,7 @@ namespace test
 
         public static string playerName;
         public static int gameSpeed = MinSpeed;
+        public static int acceleration = 0;
         public static int currentLifes = InitialLifes;
         public static bool ableToFire = false;
         public static Runner troll;
@@ -149,10 +150,10 @@ namespace test
 
                 ManageInput(playing);
 
-                Pickup colidedPickup = DirectCollisionWithPickup(pickupContainer, troll);
-                if (colidedPickup != null)
+                int pickupIndex = DetectCollisionWithPickup(pickupContainer, troll);
+                if (pickupIndex >= 0)
                 {
-                    colidedPickup.Activate();
+                    pickupContainer[pickupIndex].Activate();
                 }
                 int trapIndex = DetectCollisionWithTrap(trapsContainer, troll);
                 if (trapIndex >= 0)
@@ -166,6 +167,8 @@ namespace test
 
                 distanceBetweenPickups++;
                 distanceBetweenObstacles++;
+                acceleration += SleepTime;
+                gameSpeed = Math.Min(gameSpeed + acceleration / (SleepTime*1000), MaxSpeed);
                 currentScore += 10;
                 Thread.Sleep(SleepTime);             
             }
@@ -312,20 +315,22 @@ namespace test
             return -1;
         }
 
-        public static Pickup DirectCollisionWithPickup(List<Pickup> pickups, Runner troll)
+        public static int DetectCollisionWithPickup(List<Pickup> pickups, Runner troll)
         {
+            int index = 0;
             foreach (Pickup bonus in pickups)
             {
                 if ((troll.X + Runner.NumberOfCols - 1 >= bonus.X) &&
                     (troll.X <= bonus.X + Pickup.NumberOfCols - 1) &&
                     ((troll.Y - bonus.Y <= Runner.NumberOfRows - 1) ||
                      (bonus.Y - troll.Y <= 0)) &&
-                    bonus.IsActive)
+                    !bonus.IsActive)
                 {
-                    return bonus;
+                    return index;
                 }
+                index++;
             }
-            return null;
+            return -1;
         }
     }
 }
