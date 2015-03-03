@@ -43,6 +43,7 @@ namespace TrollRunner
 
         private void PrintTrollOnPosition(int x, int y)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             for (int row = 0; row < NumberOfRows; row++)
             {
                 for (int col = 0; col < NumberOfCols; col++)
@@ -51,6 +52,7 @@ namespace TrollRunner
                     Console.Write(this.form[row, col]);
                 }
             }
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public void DrawTroll()

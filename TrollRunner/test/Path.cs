@@ -14,11 +14,13 @@ namespace TrollRunner
         
         public void DrawPath()
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             for (int i = 0; i < Console.WindowWidth; i++)
             {
                 Console.SetCursorPosition(i, Console.WindowHeight - 2);
                 Console.Write('.');
             }
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

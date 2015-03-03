@@ -36,6 +36,7 @@ namespace TrollRunner
 
         protected override void PrintOnPosition(int trapRows, int trapCols)
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
             if (this.X > 1)
             {
                 for (int row = 0; row < trapRows; row++)
@@ -52,6 +53,7 @@ namespace TrollRunner
                 Console.SetCursorPosition(0, this.Y + 1);
                 Console.Write(' ');
             }
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public override void DrawObstacle()

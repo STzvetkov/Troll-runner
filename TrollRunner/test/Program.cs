@@ -233,6 +233,7 @@ namespace TrollRunner
             char[,] trollRunnerLetters;
             trollRunnerLetters = GraphicsManagement.GetGraphic("startmenu");
             int shift = (Console.WindowWidth - StartScreenWidth) / 2;
+            Console.ForegroundColor = ConsoleColor.Blue;
             for (int row = 0; row < StartScreenHeight; row++)
             {
                 for (int col = 0; col < StartScreenWidth; col++)
@@ -241,6 +242,7 @@ namespace TrollRunner
                     Console.Write(trollRunnerLetters[row, col]);
                 }
             }
+            Console.ForegroundColor = ConsoleColor.White;
            
             Console.WriteLine();
             for (int i = 0; i < Console.WindowWidth; i++)
@@ -248,8 +250,10 @@ namespace TrollRunner
                 Console.Write("-");
             }
             Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Red;
             string game = "THE GAME".PadLeft(Console.WindowWidth / 2);
             Console.WriteLine(game);
+            Console.ForegroundColor = ConsoleColor.White;
             
             Console.WriteLine();
             Console.WriteLine();
@@ -264,6 +268,7 @@ namespace TrollRunner
             char[,] gameover;
             gameover = GraphicsManagement.GetGraphic("gameover");
             int shift = (Console.WindowWidth - GameOverScreenWidth) / 2;
+            Console.ForegroundColor = ConsoleColor.Red;
             for (int row = 0; row < GameOverScreenHeight; row++)
             {
                 for (int col = 0; col < GameOverScreenWidth; col++)
@@ -272,6 +277,7 @@ namespace TrollRunner
                     Console.Write(gameover[row, col]);
                 }
             }
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
@@ -287,7 +293,7 @@ namespace TrollRunner
             if (currentScore >= highScore)
             {
                 var writer = new StreamWriter(@"..\..\data\HighScores.txt");           
-                Console.WriteLine("Congratulations {0} you set a new highscore of:{1} points", playerName, currentScore);
+                Console.WriteLine("Congratulations {0} you set a new highscore of:{1} points".PadRight(15), playerName, currentScore);
                 writer.WriteLine(currentScore);
                 writer.Close();
             }
