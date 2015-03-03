@@ -20,7 +20,16 @@ namespace TrollRunner
 
         private void FillAerialObstacle()
         {
-            this.form = GraphicsManagement.GetGraphic("cloud1");
+            if (GraphicsManagement.GetGraphic("cloud1").GetLength(0) != NumberOfRows ||
+                GraphicsManagement.GetGraphic("cloud1").GetLength(1) != NumberOfCols)
+            {
+                throw new InvalidOperationException(GraphicsManagement.GetGraphic("cloud1").GetLength(0)
+                    , GraphicsManagement.GetGraphic("cloud1").GetLength(1));
+            }
+            else
+            {
+                this.form = GraphicsManagement.GetGraphic("cloud1");
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ using System.IO;
 
 namespace TrollRunner
 {
-    class Game  
+    public class Game  
     {
         public const int MinSpeed = 1;
         public const int MaxSpeed = 3;

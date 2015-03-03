@@ -9,8 +9,8 @@ namespace TrollRunner
     public class Pickup : Obstacle
     {
         public const int NumberOfRows = 3;
-        public const int NumberOfCols = 4;
-        public enum PickupType {Slow, Fire, Life};
+        public const int NumberOfCols = 5;
+        public enum PickupType { Slow, Fire, Life };
 
         private PickupType bonusType;
         private int duration;
@@ -22,7 +22,7 @@ namespace TrollRunner
             this.bonusType = type;
             this.IsActive = false;
             this.duration = 0;
-            FillPickup();             
+            FillPickup();
         }
 
         public void Activate()
@@ -62,17 +62,27 @@ namespace TrollRunner
             }
         }
 
-        public void Expire ()
+        public void Expire()
         {
             this.duration = Math.Max(0, this.duration - Game.SleepTime);
-            if ( this.duration == 0)
+            if (this.duration == 0)
             {
             }
         }
         private void FillPickup()
         {
             string fileName = this.bonusType.ToString();
-            this.form = GraphicsManagement.GetGraphic(fileName);
+
+            if (GraphicsManagement.GetGraphic(fileName).GetLength(0) != NumberOfRows ||
+                GraphicsManagement.GetGraphic(fileName).GetLength(1) != NumberOfCols)
+            {
+                throw new InvalidOperationException(GraphicsManagement.GetGraphic(fileName).GetLength(0)
+                    , GraphicsManagement.GetGraphic(fileName).GetLength(1));
+            }
+            else
+            {
+                this.form = GraphicsManagement.GetGraphic(fileName);
+            }
         }
     }
 }

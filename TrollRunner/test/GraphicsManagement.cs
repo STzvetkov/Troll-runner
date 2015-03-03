@@ -7,7 +7,7 @@ using System.IO;
 
 namespace TrollRunner
 {
-    class GraphicsManagement
+    public class GraphicsManagement
     {
         private const string FolderName = @"../../graphics/"; 
 
