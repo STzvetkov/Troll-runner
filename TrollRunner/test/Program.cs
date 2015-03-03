@@ -322,8 +322,8 @@ namespace TrollRunner
             {
                 if ((troll.X + Runner.NumberOfCols - 1 >= bonus.X) &&
                     (troll.X <= bonus.X + Pickup.NumberOfCols - 1) &&
-                    ((troll.Y - bonus.Y <= Runner.NumberOfRows - 1) ||
-                     (bonus.Y - troll.Y <= 0)) &&
+                    (troll.Y - bonus.Y <= Runner.NumberOfRows - 1) &&
+                    (bonus.Y - troll.Y <= Pickup.NumberOfRows - 1) &&
                     !bonus.IsActive)
                 {
                     return index;
