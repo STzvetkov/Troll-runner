@@ -20,7 +20,8 @@ namespace TrollRunner
         private int jumpHeight = 0;
         private int jumpStage;
 
-        public Runner(int x, int y) : base(x, y)
+        public Runner(int x, int y)
+            : base(x, y)
         {
             this.form = new char[NumberOfCols, NumberOfRows];
             FillTroll();
@@ -28,7 +29,16 @@ namespace TrollRunner
 
         private void FillTroll()
         {
-            this.form = GraphicsManagement.GetGraphic("Troll");
+            if (GraphicsManagement.GetGraphic("Troll").GetLength(0) != NumberOfRows ||
+                GraphicsManagement.GetGraphic("Troll").GetLength(1) != NumberOfCols)
+            {
+                throw new InvalidOperationException(GraphicsManagement.GetGraphic("Troll").GetLength(0)
+                    , GraphicsManagement.GetGraphic("Troll").GetLength(1));
+            }
+            else
+            {
+                this.form = GraphicsManagement.GetGraphic("Troll");
+            }
         }
 
         private void PrintTrollOnPosition(int x, int y)

@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="AerialObstacle.cs" />
     <Compile Include="GraphicsManagement.cs" />
+    <Compile Include="InvalidOperationException.cs" />
     <Compile Include="LandObstacle.cs" />
     <Compile Include="Obstacle.cs" />
     <Compile Include="Path.cs" />

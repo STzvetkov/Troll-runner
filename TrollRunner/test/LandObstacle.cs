@@ -21,7 +21,17 @@ namespace TrollRunner
 
         private void FillLandObstacle()
         {
-            this.form = GraphicsManagement.GetGraphic("obstacle1");
+            if (GraphicsManagement.GetGraphic("obstacle1").GetLength(0) != NumberOfRows ||
+                GraphicsManagement.GetGraphic("obstacle1").GetLength(1) != NumberOfCols)
+            {
+                throw new InvalidOperationException(GraphicsManagement.GetGraphic("obstacle1").GetLength(0)
+                    , GraphicsManagement.GetGraphic("obstacle1").GetLength(1));
+            }
+            else
+            {
+                this.form = GraphicsManagement.GetGraphic("obstacle1");
+            }
+            
         }
 
         protected override void PrintOnPosition(int trapRows, int trapCols)
